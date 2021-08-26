@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import Home from './screens/home';
 import AppLoading from 'expo-app-loading';
-import HomeStack from './routes/homeStack';
+// import HomeStack from './routes/homeStack';
+import Navigator from './routes/drawer';
+// import 'react-native-gesture-handler';
 
 const getFonts = () =>
   Font.loadAsync({
@@ -13,7 +15,8 @@ const getFonts = () =>
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   if (fontsLoaded) {
-    return <HomeStack />;
+    // return <HomeStack />;
+    return <Navigator />;
   } else {
     return (
       <AppLoading
