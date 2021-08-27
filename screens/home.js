@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   FlatList,
   Modal,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { globalStyles } from '../styles/global';
 import Card from '../shared/card';
 import { MaterialIcons } from '@expo/vector-icons';
+import ReviewForm from './reviewForms';
 
 export default function Home({ navigation }) {
   const [modelOpen, setModelOpen] = useState(false);
@@ -34,18 +37,30 @@ export default function Home({ navigation }) {
       key: '3',
     },
   ]);
+
+  const addReview = (review) => {
+    review.key = Math.random.toString();
+    setReviews((currentReviews) => {
+      return [review, ...currentReviews];
+    });
+    setModelOpen(false);
+  };
+
   return (
     <View style={globalStyles.container}>
       <Modal visible={modelOpen} animationType="slide">
-        <View style={styles.modalContent}>
-          <MaterialIcons
-            name="close"
-            size={24}
-            style={{ ...styles.modalToggle, ...styles.modalClose }}
-            onPress={() => setModelOpen(false)}
-          />
-          <Text>Hello from the model</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalContent}>
+            <MaterialIcons
+              name="close"
+              size={24}
+              style={{ ...styles.modalToggle, ...styles.modalClose }}
+              onPress={() => setModelOpen(false)}
+            />
+
+            <ReviewForm addReviewHandle={addReview} />
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
       <MaterialIcons
         name="add"
